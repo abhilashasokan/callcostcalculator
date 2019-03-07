@@ -4,7 +4,7 @@
       <div class="form-inline">
         <div class="form-group mx-sm-3 mb-2">
           <label class="my-1 mr-2">Telephone numbers</label>
-          <input type="text" class="form-control" [(ngModel)]="phoneNumber" required id="phoneNumber" placeholder="Telephone"
+          <input type="text" class="form-control" [(ngModel)]="phoneNumber" required id="phoneNumber" name="phoneNumber" placeholder="Telephone"
             (keyup.enter)="findBestOperator()">
         </div>
         <button type="submit" class="btn btn-primary mb-2" (click)="findBestOperator()">Search</button>
