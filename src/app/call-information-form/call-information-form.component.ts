@@ -8,7 +8,7 @@ import { OperatorRatesService } from './../service/operator-rates.service';
 })
 export class CallInformationFormComponent implements OnInit {
   OperatorRates: Array<any>;
-  phoneNumber: string = '4611111111';
+  phoneNumber: string = '';
   parsedRates: Array<any>;
   dataProcessed: boolean = false;
   cheepestOperator: string;
