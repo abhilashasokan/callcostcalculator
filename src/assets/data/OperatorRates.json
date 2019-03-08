@@ -1,56 +1,56 @@
 {
     "A": [{
         "number_prefix": "1",
-        "cost": "0.9"
+        "cost": 0.9
       },
       {
         "number_prefix": "268",
-        "cost": "5.1"
+        "cost": 5.1
       },
       {
         "number_prefix": "46",
-        "cost": "0.17"
+        "cost": 0.17
       },
       {
         "number_prefix": "4620",
-        "cost": "0.0"
+        "cost": 0.0
       },
       {
         "number_prefix": "468",
-        "cost": "0.15"
+        "cost": 0.15
       },
       {
         "number_prefix": "4631",
-        "cost": "0.15"
+        "cost": 0.15
       },
       {
         "number_prefix": "4673",
-        "cost": "0.9"
+        "cost": 0.9
       },
       {
         "number_prefix": "46732",
-        "cost": "1.1"
+        "cost": 1.1
       }
     ],
     "B": [{
         "number_prefix": "1",
-        "cost": "0.92"
+        "cost": 0.92
       },
       {
         "number_prefix": "44",
-        "cost": "0.5"
+        "cost": 0.5
       },
       {
         "number_prefix": "46",
-        "cost": "0.2"
+        "cost": 0.2
       },
       {
         "number_prefix": "467",
-        "cost": "1.0"
+        "cost": 1.0
       },
       {
         "number_prefix": "48",
-        "cost": "1.2"
+        "cost": 1.2
       }
     ]  
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { OperatorRatesService } from './../service/operator-rates.service';
+import { Operator } from '../service/operator.model';
 
 @Component({
   selector: 'app-call-information-form',
@@ -7,12 +8,13 @@ import { OperatorRatesService } from './../service/operator-rates.service';
   styleUrls: ['./call-information-form.component.css']
 })
 export class CallInformationFormComponent implements OnInit {
-  OperatorRates: Array<any>;
-  phoneNumber: string = '';
+  OperatorRates: Operator;
+  phoneNumber = '';
   parsedRates: Array<any>;
-  dataProcessed: boolean = false;
-  cheepestOperator: string;
-  cheepestOperatorCost: number;
+  dataProcessed = false;
+  cheapestOperator: string;
+  cheapestOperatorCost: number;
+  errorMessage: string;
 
   constructor(private operatorRatesService: OperatorRatesService) {}
 
@@ -28,10 +30,10 @@ export class CallInformationFormComponent implements OnInit {
   findBestOperator() {
     if (!this.dataProcessed) {
       this.prepareData();
-      this.sortRatesArray(this.parsedRates,'number_prefix');
+      this.sortRatesArray(this.parsedRates, 'number_prefix');
       this.dataProcessed = true;
     }
-    this.findCheepestOption();
+    this.findCheapestOption();
   }
 
   prepareData() {
@@ -46,22 +48,20 @@ export class CallInformationFormComponent implements OnInit {
       }
     }
     this.parsedRates = tempArray;
+    console.log(this.parsedRates);
   }
 
   sortRatesArray(sortArray, props) {
-    // this.parsedRates.sort((a, b) => {
-    //   return b.number_prefix - a.number_prefix;
-    // });
     sortArray.sort((a, b) => {
       if (props === 'cost') {
-        return b.cost - a.cost;
+        return parseFloat(a.cost) - parseFloat(b.cost);
       } else if (props === 'number_prefix') {
         return b.number_prefix - a.number_prefix;
       }
     });
   }
 
-  findCheepestOption() {
+  findCheapestOption() {
     const bestOperatorMatch = [];
     let foundRange = false;
     for (let num = 0; num <= 9; num++) {
@@ -73,14 +73,18 @@ export class CallInformationFormComponent implements OnInit {
           foundRange = true;
         }
       }
-      if(foundRange === true) {
+      if (foundRange === true) {
         break;
       }
     }
     this.sortRatesArray(bestOperatorMatch, 'cost');
     if (bestOperatorMatch.length > 0) {
-      this.cheepestOperator = bestOperatorMatch[0].operator;
-      this.cheepestOperatorCost = bestOperatorMatch[0].cost;
+      this.cheapestOperator = bestOperatorMatch[0].operator;
+      this.cheapestOperatorCost = bestOperatorMatch[0].cost;
+    } else {
+      this.errorMessage = 'No operator found matching your telephone numbers';
+      this.cheapestOperator = null;
+      this.cheapestOperatorCost = null;
     }
   }
 }

@@ -1,18 +1,45 @@
 <div class="card">
   <div class="card-body">
-    <form>
+    <form #frm="ngForm">
       <div class="form-inline">
         <div class="form-group mx-sm-3 mb-2">
           <label class="my-1 mr-2">Telephone numbers</label>
-          <input type="text" class="form-control" [(ngModel)]="phoneNumber" required id="phoneNumber" name="phoneNumber" placeholder="Telephone"
-            (keyup.enter)="findBestOperator()">
+          <input type="text" 
+          required 
+          minlength="6" 
+          maxlength="10"
+          pattern="^[0-9]{10}$" 
+          class="form-control" 
+          [(ngModel)]="phoneNumber"
+          #phoneNumberRef="ngModel"
+          name="phoneNumber"           
+          placeholder="Telephone"
+          (keyup.enter)="findBestOperator()"> 
         </div>
-        <button type="submit" class="btn btn-primary mb-2" (click)="findBestOperator()">Search</button>
+        <div 
+        class="alert alert-danger" 
+        *ngIf="phoneNumberRef.invalid && (phoneNumberRef.dirty || phoneNumberRef.touched)">
+        <div *ngIf="phoneNumberRef.errors.required">
+          Telephone numbers is required.
+        </div>
+        <div *ngIf="phoneNumberRef.errors.minlength">
+          Telephone numbers Name must be at least 10 characters long.
+        </div>
+        <div *ngIf="phoneNumberRef.errors.pattern">
+          Telephone numbers dosent match the pattern.
+        </div>
+      </div>
+        <button type="submit" class="btn btn-primary mb-2" [disabled]='!frm.valid' (click)="findBestOperator()">Search</button>
       </div>
     </form>
+    
     <div class="alert alert-secondary" role="alert" *ngIf="cheepestOperator">
-      Cheapest operator is <span class="result">{{cheepestOperator}}</span> at <span class="result">{{cheepestOperatorCost
-        | currency }}</span>
+      Cheapest operator is {{cheepestOperator}} at {{cheepestOperatorCost| currency }} 
     </div>
+
+    <div class="alert alert-secondary" role="alert" *ngIf="errorMessage">
+      {{ errorMessage }}
+    </div> 
+    
   </div>
 </div>
