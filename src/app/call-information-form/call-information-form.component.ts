@@ -8,10 +8,8 @@ import { Operator } from '../service/operator.model';
   styleUrls: ['./call-information-form.component.css']
 })
 export class CallInformationFormComponent implements OnInit {
-  OperatorRates: Operator;
   phoneNumber = '';
   parsedRates: Array<any>;
-  dataProcessed = false;
   cheapestOperator: string;
   cheapestOperatorCost: number;
   errorMessage: string;
@@ -21,50 +19,36 @@ export class CallInformationFormComponent implements OnInit {
   ngOnInit() {
     this.operatorRatesService
       .getAllOperatorData()
-      .subscribe(
-        data => (this.OperatorRates = data),
-        error => error.statusText
-      );
+      .subscribe(data => this.prepareData(data), error => error.statusText);
   }
 
-  findBestOperator() {
-    if (!this.dataProcessed) {
-      this.prepareData();
-      this.sortRatesArray(this.parsedRates, 'number_prefix');
-      this.dataProcessed = true;
-    }
-    this.findCheapestOption();
-  }
-
-  prepareData() {
-    const clonedOperatorRate = { ...this.OperatorRates };
+  prepareData(operate: Operator) {
     const tempArray = [];
     // tslint:disable-next-line: forin
-    for (const operator in clonedOperatorRate) {
+    for (const operator in operate) {
       // tslint:disable-next-line: forin
-      for (const rates in clonedOperatorRate[operator]) {
-        clonedOperatorRate[operator][rates]['operator'] = operator;
-        tempArray.push(clonedOperatorRate[operator][rates]);
+      for (const rates in operate[operator]) {
+        operate[operator][rates]['operator'] = operator;
+        tempArray.push(operate[operator][rates]);
       }
     }
     this.parsedRates = tempArray;
-    console.log(this.parsedRates);
   }
 
   sortRatesArray(sortArray, props) {
     sortArray.sort((a, b) => {
       if (props === 'cost') {
-        return parseFloat(a.cost) - parseFloat(b.cost);
+        return a.cost - b.cost;
       } else if (props === 'number_prefix') {
         return b.number_prefix - a.number_prefix;
       }
     });
   }
 
-  findCheapestOption() {
+  findBestOperator() {
     const bestOperatorMatch = [];
     let foundRange = false;
-    for (let num = 0; num <= 9; num++) {
+    for (let num = 0; num < this.phoneNumber.length; num++) {
       const partialPhoneNumber = this.phoneNumber.substr(0, this.phoneNumber.length - num);
       // tslint:disable-next-line: forin
       for (const rate in this.parsedRates) {

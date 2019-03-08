@@ -2,3 +2,6 @@ span.result {
     font-weight: bold;
     color: #007bff;
 }
+.container-min-height {
+    min-height: 230px;
+}

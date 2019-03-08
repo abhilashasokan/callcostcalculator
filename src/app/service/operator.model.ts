@@ -3,6 +3,5 @@ export interface Rate {
     cost: number;
 }
 export interface Operator {
-    A: Array<Rate>;
-    B: Array<Rate>;
+    [operator: string]: Array<Rate>;
 }

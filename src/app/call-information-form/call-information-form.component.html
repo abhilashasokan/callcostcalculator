@@ -1,45 +1,30 @@
-<div class="card">
+<div class="card container-min-height">
   <div class="card-body">
     <form #frm="ngForm">
-      <div class="form-inline">
-        <div class="form-group mx-sm-3 mb-2">
-          <label class="my-1 mr-2">Telephone numbers</label>
-          <input type="text" 
-          required 
-          minlength="6" 
-          maxlength="10"
-          pattern="^[0-9]{10}$" 
-          class="form-control" 
-          [(ngModel)]="phoneNumber"
-          #phoneNumberRef="ngModel"
-          name="phoneNumber"           
-          placeholder="Telephone"
-          (keyup.enter)="findBestOperator()"> 
-        </div>
-        <div 
-        class="alert alert-danger" 
-        *ngIf="phoneNumberRef.invalid && (phoneNumberRef.dirty || phoneNumberRef.touched)">
+      <div class="form-group">
+        <label for="name">Telephone numbers</label>
+        <input type="text" required minlength="6" maxlength="11" pattern="^[0-9]{11}$" class="form-control" 
+        [(ngModel)]="phoneNumber" #phoneNumberRef="ngModel" name="phoneNumber" placeholder="Telephone" 
+        (keyup.enter)="findBestOperator()">
+      </div>
+      <div class="alert alert-danger" *ngIf="phoneNumberRef.invalid && (phoneNumberRef.dirty || phoneNumberRef.touched)">
         <div *ngIf="phoneNumberRef.errors.required">
           Telephone numbers is required.
         </div>
         <div *ngIf="phoneNumberRef.errors.minlength">
-          Telephone numbers Name must be at least 10 characters long.
+          Telephone numbers must be at least 11 characters long.
         </div>
         <div *ngIf="phoneNumberRef.errors.pattern">
           Telephone numbers dosent match the pattern.
         </div>
       </div>
-        <button type="submit" class="btn btn-primary mb-2" [disabled]='!frm.valid' (click)="findBestOperator()">Search</button>
-      </div>
+      <button type="submit" class="btn btn-primary mb-2" [disabled]='!frm.valid' (click)="findBestOperator()">Search</button>
     </form>
-    
-    <div class="alert alert-secondary" role="alert" *ngIf="cheepestOperator">
-      Cheapest operator is {{cheepestOperator}} at {{cheepestOperatorCost| currency }} 
+    <div class="alert alert-secondary" role="alert" *ngIf="cheapestOperator">
+        Cheapest operator is {{cheapestOperator}} at {{cheapestOperatorCost| currency }}
     </div>
-
     <div class="alert alert-secondary" role="alert" *ngIf="errorMessage">
       {{ errorMessage }}
-    </div> 
-    
+    </div>
   </div>
 </div>
