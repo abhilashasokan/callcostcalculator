@@ -65,8 +65,9 @@ export class CallInformationFormComponent implements OnInit {
     if (bestOperatorMatch.length > 0) {
       this.cheapestOperator = bestOperatorMatch[0].operator;
       this.cheapestOperatorCost = bestOperatorMatch[0].cost;
+      this.errorMessage = null;
     } else {
-      this.errorMessage = 'No operator found matching your telephone numbers';
+      this.errorMessage = 'No operator found matching your numbers';
       this.cheapestOperator = null;
       this.cheapestOperatorCost = null;
     }
