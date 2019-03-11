@@ -25,9 +25,10 @@ describe('CallInformationFormComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
-    // component.phoneNumber = '46732111111'; 
-    // fixture.detectChanges();
-    // component.findBestOperator();
-    // expect(component.cheapestOperatorCost).toEqual(1.1);
   });
+
+  it('Phone Number should be empty', () => {
+    expect(component.phoneNumber).toEqual('');
+  });
+
 });

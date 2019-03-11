@@ -1,27 +1,22 @@
-export const prepareData = (operate) => {
+import { Operator } from '../service/operator.model';
+
+export const prepareData = (operate: Operator) => {
     const tempArray = [];
     // tslint:disable-next-line: forin
     for (const operator in operate) {
       // tslint:disable-next-line: forin
       for (const rates in operate[operator]) {
-        operate[operator][rates]['operator'] = operator;
-        tempArray.push(operate[operator][rates]);
+        tempArray.push({...operate[operator][rates], operator});
       }
     }
     return tempArray;
 };
 
 export const sortRatesArray = (sortArray, props) => {
-     sortArray.sort((a, b) => {
-      if (props === 'cost') {
-        return a.cost - b.cost;
-      } else if (props === 'number_prefix') {
-        return b.number_prefix - a.number_prefix;
-      }
-    });
+     return sortArray.sort((a, b) => props === 'cost' ? (a.cost - b.cost) : (b.number_prefix - a.number_prefix));
 };
 
-export const findBestOperator = (phoneNumber, parsedRates) => {
+export const findBestOperator = (phoneNumber: string, parsedRates) => {
     const bestOperatorMatch = [];
     let foundRange = false;
     for (let num = 0; num < phoneNumber.length; num++) {
@@ -37,6 +32,5 @@ export const findBestOperator = (phoneNumber, parsedRates) => {
         break;
       }
     }
-    sortRatesArray(bestOperatorMatch, 'cost');
-    return bestOperatorMatch;
+    return sortRatesArray(bestOperatorMatch, 'cost');
 };
