@@ -22,7 +22,7 @@ export const sortRatesArray = (sortArray, props) => {
 };
 
 export const findBestOperator = (phoneNumber, parsedRates) => {
-    const bestOperatorMatch = []; 
+    const bestOperatorMatch = [];
     let foundRange = false;
     for (let num = 0; num < phoneNumber.length; num++) {
       const partialPhoneNumber = phoneNumber.substr(0, phoneNumber.length - num);
